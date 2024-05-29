@@ -12,7 +12,7 @@
 class Solution {
     int solve(TreeNode*root){
          //if(!root)return 0;
-        if(root->left==NULL&&root->right==NULL)return 0;
+        if(root->left==NULL&&root->right==NULL)return 1;
 
         int l=1e9,r=1e9;
         if(root->left!=NULL){
@@ -29,7 +29,7 @@ public:
         // if(root->left==NULL)root=root->right;
         // if(root->right==NULL)root=root->left;
         if(!root)return 0;
-      return  solve(root)+1;
+      return  solve(root);
 
         
     }
