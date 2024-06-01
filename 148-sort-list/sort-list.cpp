@@ -35,15 +35,14 @@ class Solution {
 public:
     ListNode* sortList(ListNode* head) {
         if(!head||!head->next)return head;
-        ListNode*slow=head,*fast=head,*temp=NULL;
+        ListNode*slow=head,*fast=head->next;
         while(fast&&fast->next){
-            temp=slow;
             fast=fast->next->next;
             slow=slow->next;
         }
-        temp->next=NULL;
+        ListNode*l2=sortList(slow->next);
+        slow->next=NULL;
         ListNode*l1=sortList(head);
-        ListNode*l2=sortList(slow);
         return merge(l1,l2);
     }
 };
