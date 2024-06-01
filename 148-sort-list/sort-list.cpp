@@ -26,11 +26,9 @@ class Solution {
         }
         if(l1){
             cur->next=l1;
-            l1=l1->next;
         }
         if(l2){
             cur->next=l2;
-            l2=l2->next;
         }
         return ptr->next;
     }
