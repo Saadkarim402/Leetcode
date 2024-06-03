@@ -1,23 +1,28 @@
 class Solution {
-   vector<vector<int>> res;
-    void helper(vector<int> nums, int start){
-        if(start==nums.size()){
+    public:
+    vector<vector<int>>res;
+    void solve(int st,vector<int>nums){
+        //base case
+        if(st==nums.size()){
             res.push_back(nums);
             return;
         }
-        for(int i=start;i<nums.size();i++){
-            if(i==start || nums[start]!=nums[i]){
-                swap(nums[start],nums[i]);
-                helper(nums,start+1);
+        //st is the starting pt we are changing 
+        //we keep it fix 
+        //and try to gen all perm after it 
+        for(int i=st;i<nums.size();i++){
+            if(i==st||nums[i]!=nums[st]){
+            swap(nums[i],nums[st]);
+            solve(st+1,nums);
+            //swap(nums[i],nums[st]);
             }
         }
-        
-    }  
-public:
+    }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-         int start=0;
-        sort(nums.begin(), nums.end());
-        helper(nums,start);
+        sort(nums.begin(),nums.end());
+       // ans.clear();
+       int st=0;
+        solve(st,nums);
         return res;
 
         
