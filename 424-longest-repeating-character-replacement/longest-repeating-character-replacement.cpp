@@ -1,27 +1,21 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
+        int ans=0,l=0,r=0,maxi=0;
         int n=s.size();
-        int ans=0;
-        for(int i=0;i<26;i++){
-            char c='A'+i;
-           // cout<<c<<endl;
-            int r=0,l=0,k1=k;
-            while(r<n){
-                if(s[r]!=c){
-                    k1--;
-                }
-                if(k1<0){
-                    if(s[l]!=c){
-                        k1++;
-                    }
-                    l++;
-                }
-                r++;
+        unordered_map<char,int>mp;
+        while(r<n){
+            mp[s[r]]++;
+            maxi=max(maxi,mp[s[r]]);
+            if((r-l+1)-maxi>k){
+                mp[s[l]]--;
+                l++;
             }
-            ans=max(ans,r-l);
+            else{
+                ans=max(ans,(r-l+1));
+            }
+            r++;
         }
         return ans;
-        
     }
 };
