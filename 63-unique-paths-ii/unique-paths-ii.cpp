@@ -1,43 +1,39 @@
 class Solution {
 public:
-    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
-        int n=grid.size(),m=grid[0].size();
-        long long dp[n][m];
-        bool f=false;
-        for(int i=n-1;i>=0;i--){
-            if(f) dp[i][m-1]=0;
-            else{
-            if(grid[i][m-1]==1){
-                f=true;
-                dp[i][m-1]=0;
-            }
-            else dp[i][m-1]=1;
-            }
-            //cout<<dp[i][m-1]<<" ";
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        
+        // If the starting cell has an obstacle, then there are no paths.
+        if (obstacleGrid[0][0] == 1) return 0;
+
+        // Create a 2D DP table with the same dimensions as obstacleGrid.
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+
+        // Initialize the starting cell
+        dp[0][0] = 1;
+
+        // Fill the first column, taking obstacles into account.
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = (obstacleGrid[i][0] == 1) ? 0 : dp[i - 1][0];
         }
-        f=false;
-        for(int i=m-1;i>=0;i--){
-            if(f) dp[n-1][i]=0;
-            else{
-            if(grid[n-1][i]==1){
-                f=true;
-                dp[n-1][i]=0;
-            }
-            else dp[n-1][i]=1;
-            }
+
+        // Fill the first row, taking obstacles into account.
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = (obstacleGrid[0][j] == 1) ? 0 : dp[0][j - 1];
         }
-        for(int i=n-2;i>=0;i--){
-            for(int j=m-2;j>=0;j--){
-                if(grid[i][j]==1){
-                    dp[i][j]=0;
-                }
-                else{
-                long long r=dp[i][j+1];
-                long long d=dp[i+1][j];
-                dp[i][j]=r+d;
+
+        // Fill the rest of the DP table
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[i][j] = 0;  // No path through this cell
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
                 }
             }
         }
-        return dp[0][0];  
+
+        return dp[m - 1][n - 1];
     }
 };
