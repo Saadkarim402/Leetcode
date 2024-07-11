@@ -7,7 +7,7 @@ public:
             char c=s[i];
             if(c==')'){
                 string temp="";
-                while(!st.empty()&&st.top()!='('){
+                while(st.top()!='('){
                     temp+=st.top();
                     st.pop();
                 }
